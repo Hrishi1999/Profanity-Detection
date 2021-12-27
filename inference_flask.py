@@ -6,7 +6,7 @@ physical_devices = tf.config.list_physical_devices('GPU')
 tf.config.experimental.set_memory_growth(physical_devices[0], True)
 
 from flask import Flask, jsonify, render_template, request
-app = Flask(__name__, template_folder='html')  
+app = Flask(__name__, template_folder='static')  
 
 embedding = "https://tfhub.dev/google/nnlm-en-dim50/2"
 hub_layer = hub.KerasLayer(embedding, input_shape=[], 
@@ -18,7 +18,7 @@ model.add(tf.keras.layers.Dense(16, activation='relu'))
 model.add(tf.keras.layers.Dense(1))
 model.add(tf.keras.layers.Dense(1))
 
-model = tf.keras.models.load_model('prof.h5', custom_objects={'KerasLayer':hub.KerasLayer}, compile = False)
+model = tf.keras.models.load_model('model.h5', custom_objects={'KerasLayer':hub.KerasLayer}, compile = False)
 
 @app.route('/')  
 def upload():  
